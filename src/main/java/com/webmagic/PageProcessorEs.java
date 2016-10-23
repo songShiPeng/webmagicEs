@@ -19,14 +19,14 @@ public class PageProcessorEs implements PageProcessor {
         //
         page.putField("content", page.getHtml().xpath("//div[@class='text']/p/text()").all());
         page.putField("title", page.getHtml().xpath("//h1[@class='title']/text()"));
-        if (page.getResultItems().get("content") == null) {
-            System.out.println("跳过");
+        if (page.getResultItems().get("content") == null || page.getResultItems().get("content").toString().trim().equals("[]")) {
             page.setSkip(true);
         }else {
             EsClinet.count++;
         }
-        if(EsClinet.count>2){
-            return;
+        if(EsClinet.count > 5){
+            //EsBuilder.client.close();
+            System.exit(0);
         }
         //添加url，暂时不防重
         page.addTargetRequests(page.getHtml().links().regex("http://\\S+.htm").all());

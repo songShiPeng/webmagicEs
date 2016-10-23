@@ -10,11 +10,14 @@ public class EsClinet {
     private static TransportClient client = EsBuilder.client;
     public static volatile int count = 0;
 
-    public static void setToEs(byte[] jsonObj){
-        IndexResponse response = client.prepareIndex("hbnews", "content")
-                .setSource(jsonObj)
-                .execute()
-                .actionGet();
-        client.close();
+    public static void setToEs(byte[] jsonObj,String title){
+        try {
+            IndexResponse response = client.prepareIndex("hbnews", "content", title)
+                    .setSource(jsonObj)
+                    .execute()
+                    .actionGet();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

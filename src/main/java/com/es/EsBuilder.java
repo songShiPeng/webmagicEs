@@ -20,11 +20,11 @@ public class EsBuilder {
     static{
         try {
             Settings settings = Settings.settingsBuilder()
-                    .put("client.transport.sniff", false)
+                    .put("client.transport.sniff", true)
                     .put("cluster.name", "elasticsearch")
                     .build();
             client = TransportClient.builder().settings(settings).build();
-            client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
+            client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9300));
         } catch (UnknownHostException e) {
             System.out.println("失败");
             e.printStackTrace();

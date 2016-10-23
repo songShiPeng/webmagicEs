@@ -29,7 +29,7 @@ public class PipelineEs implements Pipeline{
         }
         try {
             byte[] jsonObj = mapper.writeValueAsBytes(esItem);
-            EsClinet.setToEs(jsonObj);
+            EsClinet.setToEs(jsonObj,esItem.getTitle());
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
