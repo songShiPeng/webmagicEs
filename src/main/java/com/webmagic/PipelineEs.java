@@ -23,17 +23,9 @@ public class PipelineEs implements Pipeline{
         esItem.setTitle(resultItems.get("title").toString());
         esItem.setContent(resultItems.get("content").toString());
         ObjectMapper mapper = new ObjectMapper();
-        if(esItem.getContent().equals("[]")) {
-            return;
-        }
-        if(null == esItem.getTitle()){
-            esItem.setTitle(esItem.getContent().substring(4,20));
-        }
         try {
-            if(null != esItem.getTitle()) {
                 byte[] jsonObj = mapper.writeValueAsBytes(esItem);
                 EsClinet.setToEs(jsonObj, esItem.getTitle());
-            }
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

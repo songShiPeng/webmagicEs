@@ -30,7 +30,7 @@ public class EsBuilder {
             //client = TransportClient.settings(settings).build();
             client = new PreBuiltTransportClient(settings);
             client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("127.0.0.1"), 9300));
-            pattern = Pattern.compile("\\[(,|\\s)+]");
+            pattern = Pattern.compile("(\\[(,|\\s)+])|\\[\\]");
         } catch (UnknownHostException e) {
             System.out.println("失败");
             e.printStackTrace();

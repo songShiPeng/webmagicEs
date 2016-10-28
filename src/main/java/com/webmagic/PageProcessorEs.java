@@ -21,17 +21,17 @@ public class PageProcessorEs implements PageProcessor {
         //
         page.putField("content", page.getHtml().xpath("//div[@class='text']/p/text()").all());
         page.putField("title", page.getHtml().xpath("//h1[@class='title']/text()"));
+        if(null == page.getResultItems().get("title")){
+            page.putField("title",page.getResultItems().get("content").toString().substring(4,20));
+        }
         Matcher matcher = EsBuilder.pattern.matcher(page.getResultItems().get("content").toString());
         if(matcher.matches()){
             page.setSkip(true);
         }
-        else if (page.getResultItems().get("content") == null || page.getResultItems().get("content").toString().trim().equals("[]")) {
-            page.setSkip(true);
-        }else {
+        else {
             EsClinet.count++;
         }
         if(EsClinet.count > 5){
-            //EsBuilder.client.close();
             System.exit(0);
         }
         //添加url，暂时不防重
