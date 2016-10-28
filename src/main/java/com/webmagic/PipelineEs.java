@@ -11,6 +11,8 @@ import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.pipeline.Pipeline;
 
+import java.util.regex.Matcher;
+
 /**
  * Created by songshipeng on 2016/10/22.
  */
@@ -28,8 +30,10 @@ public class PipelineEs implements Pipeline{
             esItem.setTitle(esItem.getContent().substring(4,20));
         }
         try {
-            byte[] jsonObj = mapper.writeValueAsBytes(esItem);
-            EsClinet.setToEs(jsonObj,esItem.getTitle());
+            if(null != esItem.getTitle()) {
+                byte[] jsonObj = mapper.writeValueAsBytes(esItem);
+                EsClinet.setToEs(jsonObj, esItem.getTitle());
+            }
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

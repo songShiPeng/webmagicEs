@@ -1,5 +1,6 @@
 package com.es;
 
+import org.apache.log4j.Logger;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.transport.TransportClient;
 
@@ -15,7 +16,7 @@ public class EsClinet {
             IndexResponse response = client.prepareIndex("hbnews", "content", title)
                     .setSource(jsonObj)
                     .execute()
-                    .actionGet();
+                    .get();
         }catch (Exception e){
             e.printStackTrace();
         }

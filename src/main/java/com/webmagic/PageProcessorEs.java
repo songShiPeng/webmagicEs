@@ -8,6 +8,8 @@ import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.pipeline.ConsolePipeline;
 import us.codecraft.webmagic.processor.PageProcessor;
 
+import java.util.regex.Matcher;
+
 /**
  * Created by songshipeng on 2016/10/22.
  */
@@ -19,7 +21,11 @@ public class PageProcessorEs implements PageProcessor {
         //
         page.putField("content", page.getHtml().xpath("//div[@class='text']/p/text()").all());
         page.putField("title", page.getHtml().xpath("//h1[@class='title']/text()"));
-        if (page.getResultItems().get("content") == null || page.getResultItems().get("content").toString().trim().equals("[]")) {
+        Matcher matcher = EsBuilder.pattern.matcher(page.getResultItems().get("content").toString());
+        if(matcher.matches()){
+            page.setSkip(true);
+        }
+        else if (page.getResultItems().get("content") == null || page.getResultItems().get("content").toString().trim().equals("[]")) {
             page.setSkip(true);
         }else {
             EsClinet.count++;
